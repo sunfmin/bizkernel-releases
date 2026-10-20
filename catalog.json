@@ -477,8 +477,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/file-intake",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
       },
+      "abi": 1,
       "follows": "a file on this machine, each new line a JSON object applied as the command it is given",
       "needs": [],
       "grants": [
@@ -499,7 +500,13 @@
       "setup_order": [
         "file-intake"
       ],
-      "version": "0.1.0"
+      "version": "0.2.0",
+      "versions": [
+        {
+          "version": "0.2.0",
+          "abi": 1
+        }
+      ]
     },
     {
       "name": "im",
@@ -3275,8 +3282,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/im-transcribe",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
       },
+      "abi": 1,
       "works": [
         "voice.transcribe"
       ],
@@ -3303,7 +3311,13 @@
       "setup_order": [
         "im-transcribe"
       ],
-      "version": "0.1.0"
+      "version": "0.2.0",
+      "versions": [
+        {
+          "version": "0.2.0",
+          "abi": 1
+        }
+      ]
     },
     {
       "name": "invoices",
@@ -6161,8 +6175,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/wechat-intake",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
       },
+      "abi": 1,
       "follows": "a WeChat for Mac 4.x account logged in on this Mac, the chats picked from it",
       "applies": "im",
       "needs": [
@@ -6200,7 +6215,13 @@
         "voice-transcode",
         "wechat-intake"
       ],
-      "version": "0.1.0"
+      "version": "0.2.0",
+      "versions": [
+        {
+          "version": "0.2.0",
+          "abi": 1
+        }
+      ]
     }
   ]
 }
