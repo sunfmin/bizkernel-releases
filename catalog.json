@@ -1,0 +1,594 @@
+{
+  "entries": [
+    {
+      "name": "claude-ask",
+      "kind": "worker",
+      "runs": [
+        "hosted"
+      ],
+      "for": "The example hosted worker the questions module's answering process asks Claude through (ADR 32, 33, 35): it streams the Messages API's answer to the task's output as it arrives, and completes the task with the whole answer. The API key is a header the kernel adds; the worker never sees it.",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "cli/crates/claude-ask",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "works": [
+        "claude.ask"
+      ],
+      "needs": [],
+      "grants": [
+        {
+          "policy": "permit(principal == Worker::\"claude-ask\", action == Action::\"work\", resource == TaskType::\"claude.ask\");",
+          "why": "to work claude.ask tasks"
+        },
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"install\", resource == TaskType::\"claude.ask\");",
+          "why": "to install it hosted, for whoever does (or be one of the server's BIZKERNEL_ADMINS)"
+        },
+        {
+          "policy": "permit(principal == Worker::\"claude-ask\", action == Action::\"use\", resource == Secret::\"questions/ANTHROPIC_API_KEY\");",
+          "why": "to call the Messages API with the key the kernel adds"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "printf %s \"$ANTHROPIC_API_KEY\" | bk secret set questions/ANTHROPIC_API_KEY",
+          "echo 'permit(principal == Worker::\"claude-ask\", action == Action::\"work\", resource == TaskType::\"claude.ask\");' | bk policy add -",
+          "echo 'permit(principal == Worker::\"claude-ask\", action == Action::\"use\", resource == Secret::\"questions/ANTHROPIC_API_KEY\");' | bk policy add -",
+          "bk worker install claude-ask --allow-http api.anthropic.com --header x-api-key=secret:questions/ANTHROPIC_API_KEY@api.anthropic.com"
+        ]
+      },
+      "setup_order": [
+        "claude-ask"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "163482a3309a7bfad43b2eb4c25e290154d6c39e8acc52fd98034f745c81cd04",
+        "size": 242699,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/claude-ask-v0.1.0/claude-ask.wasm"
+      }
+    },
+    {
+      "name": "customers",
+      "kind": "module",
+      "runs": [
+        "hosted"
+      ],
+      "for": "Example bizkernel module in Rust: customers whose name and email are personal data (ADR 28)",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "modules/customers",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "queues": [],
+      "needs": [],
+      "grants": [
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"install\", resource == Module::\"customers\");",
+          "why": "to install it, for whoever does (or be one of the server's BIZKERNEL_ADMINS)"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "bk module install customers"
+        ]
+      },
+      "setup_order": [
+        "customers"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "e4ba76b70605b16ea81c4bdb17da606aad14ac040308584dbbe14ae22549d887",
+        "size": 416596,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/customers-v0.1.0/customers.wasm"
+      }
+    },
+    {
+      "name": "devices",
+      "kind": "module",
+      "runs": [
+        "hosted"
+      ],
+      "for": "Example bizkernel module in Rust: devices report what they measure through an intake (the MQTT intake, ADR 40)",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "modules/devices",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "queues": [],
+      "needs": [],
+      "grants": [
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"install\", resource == Module::\"devices\");",
+          "why": "to install it, for whoever does (or be one of the server's BIZKERNEL_ADMINS)"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "bk module install devices"
+        ]
+      },
+      "setup_order": [
+        "devices"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "5ab049b77613595f9daddd9d008006f3b83833f7ee092095e9f6cf4f415ab0f5",
+        "size": 396416,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/devices-v0.1.0/devices.wasm"
+      }
+    },
+    {
+      "name": "im",
+      "kind": "module",
+      "runs": [
+        "hosted"
+      ],
+      "for": "The im module: a person's instant-messaging history imported for agents to read (CONTEXT: IM)",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "modules/im",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "queues": [
+        {
+          "task_type": "voice.transcode",
+          "worked_by": [
+            "voice-transcode"
+          ]
+        },
+        {
+          "task_type": "voice.transcribe",
+          "worked_by": [
+            "im-transcribe"
+          ]
+        }
+      ],
+      "needs": [
+        {
+          "name": "im-transcribe",
+          "why": "it works voice.transcribe, a task type im queues"
+        },
+        {
+          "name": "voice-transcode",
+          "why": "it works voice.transcode, a task type im queues"
+        }
+      ],
+      "grants": [
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"install\", resource == Module::\"im\");",
+          "why": "to install it, for whoever does (or be one of the server's BIZKERNEL_ADMINS)"
+        },
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"view\", resource in Module::\"im\") when { resource.platform == \"wechat\" && [\"<your wxid>\"].contains(resource.account) };",
+          "why": "to read what your own accounts saw, and nothing of anyone else's"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "bk module install im",
+          "echo 'permit(principal == User::\"<you>\", action == Action::\"view\", resource in Module::\"im\") when { resource.platform == \"wechat\" && [\"<your wxid>\"].contains(resource.account) };' | bk policy add -"
+        ]
+      },
+      "setup_order": [
+        "im",
+        "im-transcribe",
+        "voice-transcode"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "416ab91698312d40fedc6425b123c9daada51d3585bcdcfff4357f9c0b4ae001",
+        "size": 1192286,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/im-v0.1.0/im.wasm"
+      }
+    },
+    {
+      "name": "invoices",
+      "kind": "module",
+      "runs": [
+        "hosted"
+      ],
+      "for": "Example bizkernel module in Rust: an invoice takes a scan, which its row holds in a file column, so whoever may see the row may download it (ADR 75)",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "modules/invoices",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "queues": [],
+      "needs": [],
+      "grants": [
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"install\", resource == Module::\"invoices\");",
+          "why": "to install it, for whoever does (or be one of the server's BIZKERNEL_ADMINS)"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "bk module install invoices"
+        ]
+      },
+      "setup_order": [
+        "invoices"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "fcc19e04e243052a1d7afbc6b01be2a40c8fceb67618762c212d31251f91366a",
+        "size": 392099,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/invoices-v0.1.0/invoices.wasm"
+      }
+    },
+    {
+      "name": "loyalty",
+      "kind": "module",
+      "runs": [
+        "hosted"
+      ],
+      "for": "Example bizkernel module in Rust: members earn and redeem points",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "modules/loyalty",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "queues": [],
+      "needs": [],
+      "grants": [
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"install\", resource == Module::\"loyalty\");",
+          "why": "to install it, for whoever does (or be one of the server's BIZKERNEL_ADMINS)"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "bk module install loyalty"
+        ]
+      },
+      "setup_order": [
+        "loyalty"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "e2ffc254f94b888fb6328e29340afe05b4ea0e6b9d93122507c365921bd00bc8",
+        "size": 523917,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/loyalty-v0.1.0/loyalty.wasm"
+      }
+    },
+    {
+      "name": "mqtt-intake",
+      "kind": "intake",
+      "runs": [
+        "hosted"
+      ],
+      "for": "The example intake (ADR 40): it keeps a session with an MQTT broker (3.1.1 or 5, QoS 0 and 1) and applies a module's command with each message, acknowledging it only once the apply answered.",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "cli/crates/mqtt-intake",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "follows": "an MQTT broker's topics, as its config (--config) names them and the command each message is applied as",
+      "needs": [],
+      "grants": [
+        {
+          "policy": "permit(principal == Worker::\"mqtt-intake\", action == Action::\"apply\", resource in Module::\"<the module whose command it applies>\");",
+          "why": "to apply the commands it is given with what it reads"
+        },
+        {
+          "policy": "permit(principal == Worker::\"mqtt-intake\", action == Action::\"use\", resource == Secret::\"<module>/MQTT_PASSWORD\");",
+          "why": "to sign in to the broker with the password its config names"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "printf %s \"$MQTT_PASSWORD\" | bk secret set <module>/MQTT_PASSWORD",
+          "echo 'permit(principal == Worker::\"mqtt-intake\", action == Action::\"apply\", resource in Module::\"<the module whose command it applies>\");' | bk policy add -",
+          "echo 'permit(principal == Worker::\"mqtt-intake\", action == Action::\"use\", resource == Secret::\"<module>/MQTT_PASSWORD\");' | bk policy add -",
+          "bk worker install mqtt-intake --allow-connect <broker host>:<port> --secret <module>/MQTT_PASSWORD --config <config.json>   # one of the server's BIZKERNEL_ADMINS"
+        ]
+      },
+      "setup_order": [
+        "mqtt-intake"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "b1bfa0b840af463e20073ae952ac490d290072dd17f4d5d9443e01be6bb2a3be",
+        "size": 305882,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/mqtt-intake-v0.1.0/mqtt-intake.wasm"
+      }
+    },
+    {
+      "name": "order",
+      "kind": "module",
+      "runs": [
+        "hosted"
+      ],
+      "for": "Example bizkernel module in Rust: a pick-up order, from placed to captured, cancelled or refunded",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "modules/order",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "queues": [
+        {
+          "task_type": "order.send_to_store",
+          "worked_by": [
+            "order-send"
+          ]
+        }
+      ],
+      "needs": [
+        {
+          "name": "order-send",
+          "why": "it works order.send_to_store, a task type order queues"
+        }
+      ],
+      "grants": [
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"install\", resource == Module::\"order\");",
+          "why": "to install it, for whoever does (or be one of the server's BIZKERNEL_ADMINS)"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "bk module install order"
+        ]
+      },
+      "setup_order": [
+        "order",
+        "order-send"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "568a1e15cf6cfc164237cc369546f4bf3688d4bbb69a6e5332093174050b8676",
+        "size": 761403,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/order-v0.1.0/order.wasm"
+      }
+    },
+    {
+      "name": "order-send",
+      "kind": "worker",
+      "runs": [
+        "hosted"
+      ],
+      "for": "The example hosted worker the order module's sending process sends orders to their stores through (ADR 33, 42, 43, 59): it posts each order to its store's address, with the store's key as a header the kernel adds, and answers what the store said: succeeded, failed or unknown.",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "cli/crates/order-send",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "works": [
+        "order.send_to_store"
+      ],
+      "needs": [],
+      "grants": [
+        {
+          "policy": "permit(principal == Worker::\"order-send\", action == Action::\"work\", resource == TaskType::\"order.send_to_store\");",
+          "why": "to work order.send_to_store tasks"
+        },
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"install\", resource == TaskType::\"order.send_to_store\");",
+          "why": "to install it hosted, for whoever does (or be one of the server's BIZKERNEL_ADMINS)"
+        },
+        {
+          "policy": "permit(principal == Worker::\"order-send\", action == Action::\"use\", resource == Secret::\"order/STORE_KEY\");",
+          "why": "to post each order with its store's key, which the kernel adds"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "printf %s \"$STORE_KEY\" | bk secret set 'order/STORE_KEY[<store>]'   # each store's",
+          "echo 'permit(principal == Worker::\"order-send\", action == Action::\"work\", resource == TaskType::\"order.send_to_store\");' | bk policy add -",
+          "echo 'permit(principal == Worker::\"order-send\", action == Action::\"use\", resource == Secret::\"order/STORE_KEY\");' | bk policy add -",
+          "bk worker install order-send --allow-http '*.pos.example.com' --header 'x-store-key=secret:order/STORE_KEY[*]@*.pos.example.com' --key store"
+        ]
+      },
+      "setup_order": [
+        "order-send"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "4150feb76d6f142a8cdb4520b01f5e6e50bffc4e3c8670c4e4f1bfffed560dc0",
+        "size": 222316,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/order-send-v0.1.0/order-send.wasm"
+      }
+    },
+    {
+      "name": "questions",
+      "kind": "module",
+      "runs": [
+        "hosted"
+      ],
+      "for": "Example bizkernel module in Rust: a process asks Claude through a hosted worker (a task, ADR 31, 33), whose answer streams to whoever watches, then records the answer",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "modules/questions",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "queues": [
+        {
+          "task_type": "claude.ask",
+          "worked_by": [
+            "claude-ask"
+          ]
+        }
+      ],
+      "needs": [
+        {
+          "name": "claude-ask",
+          "why": "it works claude.ask, a task type questions queues"
+        }
+      ],
+      "grants": [
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"install\", resource == Module::\"questions\");",
+          "why": "to install it, for whoever does (or be one of the server's BIZKERNEL_ADMINS)"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "bk module install questions"
+        ]
+      },
+      "setup_order": [
+        "questions",
+        "claude-ask"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "636820db377a9e062a6b08967ebe5103209b098a17d507cfc41a728db7ad3775",
+        "size": 398261,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/questions-v0.1.0/questions.wasm"
+      }
+    },
+    {
+      "name": "report-render",
+      "kind": "worker",
+      "runs": [
+        "hosted",
+        "self_hosted"
+      ],
+      "for": "The example worker the reports module's publishing process renders through (ADR 31, 32): one handler, run as a self-hosted worker (the binary) or installed into the kernel as a hosted one (the library, built to WebAssembly).",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "cli/crates/report-render",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "works": [
+        "report.render"
+      ],
+      "needs": [],
+      "grants": [
+        {
+          "policy": "permit(principal == Worker::\"report-render\", action == Action::\"work\", resource == TaskType::\"report.render\");",
+          "why": "to work report.render tasks"
+        },
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"install\", resource == TaskType::\"report.render\");",
+          "why": "to install it hosted, for whoever does (or be one of the server's BIZKERNEL_ADMINS)"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "echo 'permit(principal == Worker::\"report-render\", action == Action::\"work\", resource == TaskType::\"report.render\");' | bk policy add -",
+          "bk worker install report-render"
+        ],
+        "self_hosted": [
+          "(cd cli && cargo build --release -p report-render)",
+          "echo 'permit(principal == Worker::\"report-render\", action == Action::\"work\", resource == TaskType::\"report.render\");' | bk policy add -",
+          "bk worker token create worker:report-render   # an administrator: prints its token once",
+          "export BK_URL=<where the kernel listens> BK_TOKEN=<the token it printed>",
+          "cli/target/release/report-render"
+        ]
+      },
+      "setup_order": [
+        "report-render"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "b5e4de67ec70b067f0621e76f5e79d45e5913cfad6872e8c31f3ac3d51d067c5",
+        "size": 272127,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/report-render-v0.1.0/report-render.wasm"
+      }
+    },
+    {
+      "name": "reports",
+      "kind": "module",
+      "runs": [
+        "hosted"
+      ],
+      "for": "Example bizkernel module in Rust: a process renders a report through a self-hosted worker (a task, ADR 31), then publishes it",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "modules/reports",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "queues": [
+        {
+          "task_type": "report.render",
+          "worked_by": [
+            "report-render"
+          ]
+        },
+        {
+          "task_type": "report.deliver",
+          "worked_by": []
+        }
+      ],
+      "needs": [
+        {
+          "name": "report-render",
+          "why": "it works report.render, a task type reports queues"
+        }
+      ],
+      "grants": [
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"install\", resource == Module::\"reports\");",
+          "why": "to install it, for whoever does (or be one of the server's BIZKERNEL_ADMINS)"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "bk module install reports"
+        ]
+      },
+      "setup_order": [
+        "reports",
+        "report-render"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "1dbdb4849a96ca0bf20da59de592a7f6c57fed8c794668845d93dccdc1b73dc4",
+        "size": 444689,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/reports-v0.1.0/reports.wasm"
+      }
+    },
+    {
+      "name": "voice-transcode",
+      "kind": "worker",
+      "runs": [
+        "hosted",
+        "self_hosted"
+      ],
+      "for": "The worker the im module's transcoding process transcodes voice messages through (ADR 31, 33): it decodes a voice by its content type (WeChat's SILK) and encodes it to Ogg Opus, a file of the task's. One handler, run as a self-hosted worker (the binary) or installed into the kernel as a hosted one (the library, built to WebAssembly).",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "cli/crates/voice-transcode",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "works": [
+        "voice.transcode"
+      ],
+      "needs": [],
+      "grants": [
+        {
+          "policy": "permit(principal == Worker::\"voice-transcode\", action == Action::\"work\", resource == TaskType::\"voice.transcode\");",
+          "why": "to work voice.transcode tasks"
+        },
+        {
+          "policy": "permit(principal == User::\"<you>\", action == Action::\"install\", resource == TaskType::\"voice.transcode\");",
+          "why": "to install it hosted, for whoever does (or be one of the server's BIZKERNEL_ADMINS)"
+        }
+      ],
+      "setup": {
+        "hosted": [
+          "echo 'permit(principal == Worker::\"voice-transcode\", action == Action::\"work\", resource == TaskType::\"voice.transcode\");' | bk policy add -",
+          "bk worker install voice-transcode"
+        ],
+        "self_hosted": [
+          "(cd cli && cargo build --release -p voice-transcode)",
+          "echo 'permit(principal == Worker::\"voice-transcode\", action == Action::\"work\", resource == TaskType::\"voice.transcode\");' | bk policy add -",
+          "bk worker token create worker:voice-transcode   # an administrator: prints its token once",
+          "export BK_URL=<where the kernel listens> BK_TOKEN=<the token it printed>",
+          "cli/target/release/voice-transcode"
+        ]
+      },
+      "setup_order": [
+        "voice-transcode"
+      ],
+      "version": "0.1.0",
+      "wasm": {
+        "sha256": "2f8f3036794c2e8b822a97ec6c8abf84faebaccf5209392a8ef8035b4c5535f3",
+        "size": 834829,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/voice-transcode-v0.1.0/voice-transcode.wasm"
+      }
+    }
+  ]
+}
