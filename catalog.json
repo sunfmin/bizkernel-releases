@@ -477,9 +477,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/file-intake",
-        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
+        "commit": "df6b4ee6acbf773b325bec41cb04ba5354bea458"
       },
-      "abi": 1,
+      "abi": 2,
       "follows": "a file on this machine, each new line a JSON object applied as the command it is given",
       "needs": [],
       "grants": [
@@ -500,11 +500,15 @@
       "setup_order": [
         "file-intake"
       ],
-      "version": "0.2.0",
+      "version": "0.2.1",
       "versions": [
         {
           "version": "0.2.0",
           "abi": 1
+        },
+        {
+          "version": "0.2.1",
+          "abi": 2
         }
       ]
     },
@@ -3282,9 +3286,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/im-transcribe",
-        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
+        "commit": "df6b4ee6acbf773b325bec41cb04ba5354bea458"
       },
-      "abi": 1,
+      "abi": 2,
       "works": [
         "voice.transcribe"
       ],
@@ -3311,11 +3315,15 @@
       "setup_order": [
         "im-transcribe"
       ],
-      "version": "0.2.0",
+      "version": "0.2.1",
       "versions": [
         {
           "version": "0.2.0",
           "abi": 1
+        },
+        {
+          "version": "0.2.1",
+          "abi": 2
         }
       ]
     },
@@ -6175,9 +6183,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/wechat-intake",
-        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
+        "commit": "df6b4ee6acbf773b325bec41cb04ba5354bea458"
       },
-      "abi": 1,
+      "abi": 2,
       "follows": "a WeChat for Mac 4.x account logged in on this Mac, the chats picked from it",
       "applies": "im",
       "needs": [
@@ -6215,11 +6223,15 @@
         "voice-transcode",
         "wechat-intake"
       ],
-      "version": "0.2.0",
+      "version": "0.2.1",
       "versions": [
         {
           "version": "0.2.0",
           "abi": 1
+        },
+        {
+          "version": "0.2.1",
+          "abi": 2
         }
       ]
     }
