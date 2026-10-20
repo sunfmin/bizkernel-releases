@@ -10,7 +10,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/claude-ask",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "works": [
         "claude.ask"
@@ -46,7 +46,13 @@
         "sha256": "163482a3309a7bfad43b2eb4c25e290154d6c39e8acc52fd98034f745c81cd04",
         "size": 242699,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/claude-ask-v0.1.0/claude-ask.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "customers",
@@ -58,7 +64,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/customers",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "queues": [],
       "needs": [],
@@ -81,7 +87,13 @@
         "sha256": "e4ba76b70605b16ea81c4bdb17da606aad14ac040308584dbbe14ae22549d887",
         "size": 416596,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/customers-v0.1.0/customers.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "devices",
@@ -93,7 +105,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/devices",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "queues": [],
       "needs": [],
@@ -116,7 +128,13 @@
         "sha256": "5ab049b77613595f9daddd9d008006f3b83833f7ee092095e9f6cf4f415ab0f5",
         "size": 396416,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/devices-v0.1.0/devices.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "file-intake",
@@ -162,7 +180,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/im",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "queues": [
         {
@@ -214,7 +232,13 @@
         "sha256": "416ab91698312d40fedc6425b123c9daada51d3585bcdcfff4357f9c0b4ae001",
         "size": 1192286,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/im-v0.1.0/im.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "im-transcribe",
@@ -266,7 +290,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/invoices",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "queues": [],
       "needs": [],
@@ -289,7 +313,13 @@
         "sha256": "fcc19e04e243052a1d7afbc6b01be2a40c8fceb67618762c212d31251f91366a",
         "size": 392099,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/invoices-v0.1.0/invoices.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "loyalty",
@@ -301,7 +331,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/loyalty",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "queues": [],
       "needs": [],
@@ -324,7 +354,13 @@
         "sha256": "e2ffc254f94b888fb6328e29340afe05b4ea0e6b9d93122507c365921bd00bc8",
         "size": 523917,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/loyalty-v0.1.0/loyalty.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "mqtt-intake",
@@ -336,7 +372,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/mqtt-intake",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "follows": "an MQTT broker's topics, as its config (--config) names them and the command each message is applied as",
       "needs": [],
@@ -366,7 +402,13 @@
         "sha256": "b1bfa0b840af463e20073ae952ac490d290072dd17f4d5d9443e01be6bb2a3be",
         "size": 305882,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/mqtt-intake-v0.1.0/mqtt-intake.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "order",
@@ -378,7 +420,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/order",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "queues": [
         {
@@ -414,7 +456,13 @@
         "sha256": "568a1e15cf6cfc164237cc369546f4bf3688d4bbb69a6e5332093174050b8676",
         "size": 761403,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/order-v0.1.0/order.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "order-send",
@@ -426,7 +474,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/order-send",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "works": [
         "order.send_to_store"
@@ -462,7 +510,13 @@
         "sha256": "4150feb76d6f142a8cdb4520b01f5e6e50bffc4e3c8670c4e4f1bfffed560dc0",
         "size": 222316,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/order-send-v0.1.0/order-send.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "questions",
@@ -474,7 +528,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/questions",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "queues": [
         {
@@ -510,7 +564,13 @@
         "sha256": "636820db377a9e062a6b08967ebe5103209b098a17d507cfc41a728db7ad3775",
         "size": 398261,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/questions-v0.1.0/questions.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "report-render",
@@ -523,7 +583,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/report-render",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "works": [
         "report.render"
@@ -560,7 +620,13 @@
         "sha256": "b5e4de67ec70b067f0621e76f5e79d45e5913cfad6872e8c31f3ac3d51d067c5",
         "size": 272127,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/report-render-v0.1.0/report-render.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "reports",
@@ -572,7 +638,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/reports",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "queues": [
         {
@@ -612,7 +678,13 @@
         "sha256": "1dbdb4849a96ca0bf20da59de592a7f6c57fed8c794668845d93dccdc1b73dc4",
         "size": 444689,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/reports-v0.1.0/reports.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "voice-transcode",
@@ -625,7 +697,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/voice-transcode",
-        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
       },
       "works": [
         "voice.transcode"
@@ -662,7 +734,13 @@
         "sha256": "2f8f3036794c2e8b822a97ec6c8abf84faebaccf5209392a8ef8035b4c5535f3",
         "size": 834829,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/voice-transcode-v0.1.0/voice-transcode.wasm"
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "abi": null
+        }
+      ]
     },
     {
       "name": "wechat-intake",
