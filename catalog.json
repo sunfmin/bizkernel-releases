@@ -119,6 +119,40 @@
       }
     },
     {
+      "name": "file-intake",
+      "kind": "intake",
+      "runs": [
+        "self_hosted"
+      ],
+      "for": "The example self-hosted intake (ADR 71): follows a local file, each new line applied as its module's command, and continues where it stopped.",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "cli/crates/file-intake",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "follows": "a file on this machine, each new line a JSON object applied as the command it is given",
+      "needs": [],
+      "grants": [
+        {
+          "policy": "permit(principal == Worker::\"file-intake\", action == Action::\"apply\", resource in Module::\"<the module whose command it applies>\");",
+          "why": "to apply the commands it is given with what it reads"
+        }
+      ],
+      "setup": {
+        "self_hosted": [
+          "(cd cli && cargo build --release -p file-intake)",
+          "echo 'permit(principal == Worker::\"file-intake\", action == Action::\"apply\", resource in Module::\"<the module whose command it applies>\");' | bk policy add -",
+          "bk worker token create worker:file-intake   # an administrator: prints its token once",
+          "export BK_URL=<where the kernel listens> BK_TOKEN=<the token it printed>",
+          "cli/target/release/file-intake <file> <command>"
+        ]
+      },
+      "setup_order": [
+        "file-intake"
+      ],
+      "version": "0.1.0"
+    },
+    {
       "name": "im",
       "kind": "module",
       "runs": [
@@ -181,6 +215,46 @@
         "size": 1192286,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/im-v0.1.0/im.wasm"
       }
+    },
+    {
+      "name": "im-transcribe",
+      "kind": "worker",
+      "runs": [
+        "self_hosted"
+      ],
+      "for": "The worker the im module's transcribing process transcribes voice messages through (ADR 31, 79): run on the person's own Mac, it decodes a voice by its content type (WeChat's SILK) and hears it with SenseVoice-Small through sherpa-onnx, loaded when it starts, answering the text, the model and its version.",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "cli/crates/im-transcribe",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "works": [
+        "voice.transcribe"
+      ],
+      "needs": [],
+      "grants": [
+        {
+          "policy": "permit(principal == Worker::\"im-transcribe\", action == Action::\"work\", resource == TaskType::\"voice.transcribe\");",
+          "why": "to work voice.transcribe tasks"
+        }
+      ],
+      "machine": [
+        "sherpa-onnx 1.13.2's shared libraries, loaded when it starts: its macOS release sherpa-onnx-v1.13.2-osx-universal2-shared unpacked into ~/.cache/sherpa-onnx/dist, or SHERPA_ONNX_LIB_DIR set to its lib directory; another release is refused",
+        "the SenseVoice-Small model, sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17, in ~/.cache/sherpa-onnx, ~/.cache/modelscope or ~/.cache/huggingface/hub, or IM_TRANSCRIBE_MODEL set to its directory; it never downloads it"
+      ],
+      "setup": {
+        "self_hosted": [
+          "(cd cli && cargo build --release -p im-transcribe)",
+          "echo 'permit(principal == Worker::\"im-transcribe\", action == Action::\"work\", resource == TaskType::\"voice.transcribe\");' | bk policy add -",
+          "bk worker token create worker:im-transcribe   # an administrator: prints its token once",
+          "export BK_URL=<where the kernel listens> BK_TOKEN=<the token it printed>",
+          "cli/target/release/im-transcribe"
+        ]
+      },
+      "setup_order": [
+        "im-transcribe"
+      ],
+      "version": "0.1.0"
     },
     {
       "name": "invoices",
@@ -589,6 +663,57 @@
         "size": 834829,
         "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/voice-transcode-v0.1.0/voice-transcode.wasm"
       }
+    },
+    {
+      "name": "wechat-intake",
+      "kind": "intake",
+      "runs": [
+        "self_hosted"
+      ],
+      "for": "The self-hosted intake (ADR 71) that imports the chats a person picks from WeChat for Mac 4.x into the im module, each message as its kind.",
+      "source": {
+        "repository": "https://github.com/sunfmin/bizkernel",
+        "path": "cli/crates/wechat-intake",
+        "commit": "d364fbf7346e33efac766ffacc704ea68f57a9f6"
+      },
+      "follows": "a WeChat for Mac 4.x account logged in on this Mac, the chats picked from it",
+      "applies": "im",
+      "needs": [
+        {
+          "name": "im",
+          "why": "it applies im's commands"
+        }
+      ],
+      "grants": [
+        {
+          "policy": "permit(principal == Worker::\"wechat-intake\", action == Action::\"apply\", resource in Module::\"im\");",
+          "why": "to apply im's commands with what it reads"
+        }
+      ],
+      "machine": [
+        "macOS, with WeChat for Mac 4.x logged in to the account whose chats it imports",
+        "DB_KEYS in its environment: the keys of WeChat's databases, which `sudo wechat-cli init` writes to ~/.wechat-cli/all_keys.json (npm install -g @canghe_ai/wechat-cli); export DB_KEYS=\"$(cat ~/.wechat-cli/all_keys.json)\", and again after WeChat updates",
+        "curl on PATH, to fetch stickers from WeChat's CDN"
+      ],
+      "setup": {
+        "self_hosted": [
+          "(cd cli && cargo build --release -p wechat-intake)",
+          "echo 'permit(principal == Worker::\"wechat-intake\", action == Action::\"apply\", resource in Module::\"im\");' | bk policy add -",
+          "bk worker token create worker:wechat-intake   # an administrator: prints its token once",
+          "export BK_URL=<where the kernel listens> BK_TOKEN=<the token it printed>",
+          "cli/target/release/wechat-intake --help",
+          "cli/target/release/wechat-intake doctor",
+          "cli/target/release/wechat-intake chats",
+          "cli/target/release/wechat-intake run --chat <chat id>"
+        ]
+      },
+      "setup_order": [
+        "im",
+        "im-transcribe",
+        "voice-transcode",
+        "wechat-intake"
+      ],
+      "version": "0.1.0"
     }
   ]
 }
