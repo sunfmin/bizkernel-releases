@@ -10,8 +10,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/claude-ask",
-        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
+      "abi": 5,
       "works": [
         "claude.ask"
       ],
@@ -41,16 +42,20 @@
       "setup_order": [
         "claude-ask"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "wasm": {
-        "sha256": "163482a3309a7bfad43b2eb4c25e290154d6c39e8acc52fd98034f745c81cd04",
-        "size": 242699,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/claude-ask-v0.1.0/claude-ask.wasm"
+        "sha256": "afe30dc675e76a588f45377a9fbc643d4b1f716b1772c05401788f5719a7f705",
+        "size": 302986,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/claude-ask-v0.2.0/claude-ask.wasm"
       },
       "versions": [
         {
           "version": "0.1.0",
           "abi": null
+        },
+        {
+          "version": "0.2.0",
+          "abi": 5
         }
       ]
     },
@@ -64,9 +69,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/customers",
-        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
-      "abi": 1,
+      "abi": 5,
       "help": {
         "module": "customers",
         "guide": "FOR\n  Customers of a shop whose name and email are personal data. A customer\n  (aggregate customer) is one person, identified by a customer_id the caller\n  makes up. Name and email, and the greeting, are sealed with that\n  customer's key: the module's own code only ever sees tokens.\n\nFLOWS\n  Sign-up: customer.register writes CustomerRegistered (name, email, tier\n  gold or silver); the read model then lists the customer.\n  Greeting: customer.greet on a registered customer writes CustomerGreeted\n  (a fixed greeting, sealed like the other personal fields).\n  A person or an agent applies both; no process or worker is involved.\n\nBUILDING ON IT\n  Read the view customers.list (table customers, one row per customer,\n  filter by tier) to find customers; name and email come back opened by the\n  kernel for those allowed to see them. Another module that needs to know\n  a customer exists reads that view, or may start a process on\n  CustomerRegistered or CustomerGreeted of aggregate customer. No settings,\n  tasks or grants to set first.\n\nTRIPS\n  Make up a new uuid as customer_id for each customer; registering an id\n  twice is rejected (customer_exists). customer.greet before register is\n  rejected (no_customer): register first.\n  tier is not personal and stays in the clear; only the two tiers exist.\n  Name is 1 to 40 characters, email at least 3.\n",
@@ -210,6 +215,7 @@
         "actions": [],
         "settings": [],
         "data": [],
+        "sequences": [],
         "read_model": {
           "aggregates": [
             "customer"
@@ -273,11 +279,11 @@
       "setup_order": [
         "customers"
       ],
-      "version": "0.2.0",
+      "version": "0.3.0",
       "wasm": {
-        "sha256": "59cb467ec09d0ea61be688f37891a30d7d95ba6b5edb6d2e33c2daab5c832414",
-        "size": 421156,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/customers-v0.2.0/customers.wasm"
+        "sha256": "9066de3e39dbf8fa3780a6eae915897fc29bd37fa6f6fcb66c8ecd1c546399bc",
+        "size": 426053,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/customers-v0.3.0/customers.wasm"
       },
       "versions": [
         {
@@ -287,6 +293,10 @@
         {
           "version": "0.2.0",
           "abi": 1
+        },
+        {
+          "version": "0.3.0",
+          "abi": 5
         }
       ]
     },
@@ -300,9 +310,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/devices",
-        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
-      "abi": 1,
+      "abi": 5,
       "help": {
         "module": "devices",
         "guide": "FOR\n  Devices (aggregate device) that report what they measure. A device is one\n  sensor, identified by a device_id the caller makes up; its state is its\n  last temperature and when it was reported, how many reports it made, and\n  its last photo.\n\nFLOWS\n  Telemetry: an intake (the MQTT intake worker, subscribed to\n  devices/+/telemetry) applies device.report for each message; it writes\n  DeviceReported. The device_id is the topic's second level.\n  Photo: the photo is uploaded first as a file (bk file put, or an intake's\n  put_file), then device.photograph keeps it and writes DevicePhotographed.\n  A person, an agent or an intake applies both commands; no process, task\n  or view is declared.\n\nBUILDING ON IT\n  The module has no read model, process-start events or tasks: another\n  module reads a device with bk state device <device_id> (temp, at,\n  reports, photo, photos). An intake needs the broker allowed and its\n  secret (devices/MQTT_PASSWORD) set when the worker is installed.\n\nTRIPS\n  device.report rejects a temp outside -100 to 200 (implausible_reading):\n  fix the sensor or the unit, the value is never clamped.\n  A second report replaces the temperature; only the last stays in state,\n  though every report remains an event.\n  A report delivered twice by the broker is one report only if the intake\n  gives both the same key; applying by hand twice without a key writes two.\n  The photo must be an image file already uploaded: pass the file as bk\n  file put answered, not a path.\n",
@@ -428,6 +438,7 @@
         "actions": [],
         "settings": [],
         "data": [],
+        "sequences": [],
         "read_model": null,
         "webhooks": [],
         "recurring": [],
@@ -450,11 +461,11 @@
       "setup_order": [
         "devices"
       ],
-      "version": "0.2.0",
+      "version": "0.3.0",
       "wasm": {
-        "sha256": "ee3d2e53a594bafd9212fca0bb251065b5ac751ed9b43bff6dce9d3edf04b160",
-        "size": 400973,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/devices-v0.2.0/devices.wasm"
+        "sha256": "dc936138a085b2be9f7e24aee845bfbfacc06efd01508bb87409f62f028ce345",
+        "size": 405707,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/devices-v0.3.0/devices.wasm"
       },
       "versions": [
         {
@@ -464,6 +475,10 @@
         {
           "version": "0.2.0",
           "abi": 1
+        },
+        {
+          "version": "0.3.0",
+          "abi": 5
         }
       ]
     },
@@ -526,9 +541,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/im",
-        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
-      "abi": 1,
+      "abi": 5,
       "help": {
         "module": "im",
         "guide": "FOR\n  A person's instant-messaging history, imported so that agents can read it.\n  An intake reads each account's chats on a platform (wechat) and applies\n  this module's commands; people and agents read it back. The nouns are\n  four aggregates: account (who the history is read as), contact (a person\n  as an account sees them), chat (one-to-one or group, with its members and\n  notice) and message (one sent in a chat, of one kind, with its media).\n  Every row is one account's: it holds what that account saw.\n\nFLOWS\n  Import: an intake applies contact.record, chat.record, then\n  message.record for each message, and account.read to note how far it\n  read. Applying the same thing again records nothing, so an intake\n  may send everything each run; only what changed becomes an event.\n  Names keep their history: bk history contact|account|chat <id> lists\n  every earlier name, remark, member name and notice.\n  Media: the intake uploads each file (bk file put) and sends its id in\n  message.record. A media message recorded without its file is missing;\n  message.attach (or message.record again with the file) adds it later.\n  Voice, after a voice message is recorded with its file (or its missing\n  file is found), TranscodeRequested and TranscribeRequested follow,\n  each once per message, and start two separate processes:\n    transcoding: queues task voice.transcode; the worker voice-transcode\n      answers an Ogg Opus copy; the process applies\n      message.record_transcode (VoiceTranscoded).\n    transcribing: queues task voice.transcribe; the worker im-transcribe\n      answers text, model and version; the process applies\n      message.record_transcription (VoiceTranscribed, by worker).\n  Neither waits for the other, and each fails alone. An intake may record\n  the platform's own transcription with message.record_transcription.\n  Again: message.transcode and message.transcribe ask a voice to be done\n  again, as after a new worker or model is installed.\n\nBUILDING ON IT\n  Read with the view im.transcript (a chat's messages as one account saw\n  them, in the platform's time order, each with its sender's display name\n  and a quoted message attached; page with the returned next), or query\n  the tables im.chats, im.contacts, im.members, im.messages. All carry\n  platform and account columns: always filter by both.\n  A process of yours may start on message MessageRecorded (a message was\n  recorded), VoiceTranscoded or VoiceTranscribed (its copy or text is\n  there now). Only an intake applies the import commands.\n  Workers: install voice-transcode and im-transcribe, or no voice ever\n  gets its copy or text (the processes wait for their tasks). Inspect a\n  stuck voice with bk state transcoding|transcribing <id>, the id being\n  the Requested event's.\n  Grants to add (bk describe lists them under im's grants): owner for each\n  person, naming their email, the platform and the accounts they own (view\n  of those rows only); intake for the intake worker (apply on the\n  commands, no view); transcode and transcribe for the two workers (work\n  on their task). An agent reading for its person: bk auth delegate --scope\n  im.transcript, which allows that view alone, no bk query.\n\nTRIPS\n  Senders are contact ids, never names. A one-to-one chat is named by its\n  two contact ids sorted and joined by a comma, so both accounts name it\n  the same. Name a group or message as the platform does; the same one\n  seen from two accounts is one stream.\n  message.record is refused (kind_mismatch) when a kind carries another\n  kind's field or lacks its own, or a media field sits on a non-media kind;\n  the fix names the field. Text and unknown carry no field.\n  A file once recorded is kept: sending another records nothing.\n  message.attach, transcode and transcribe on a message the account has not\n  recorded: unknown_message; on a non-media or non-voice message: not_media\n  or not_voice; on a voice recorded missing: missing, so attach first.\n  Unsupported format or undecodable voice fails its process, not retried\n  (it would fail again); the message stays as it was.\n  The intake is granted no view: it cannot read back what it wrote.\n  Give each message.record its own new --key uuid.\n",
@@ -2846,6 +2861,7 @@
         "actions": [],
         "settings": [],
         "data": [],
+        "sequences": [],
         "read_model": {
           "aggregates": [
             "account",
@@ -3263,11 +3279,11 @@
         "im-transcribe",
         "voice-transcode"
       ],
-      "version": "0.2.0",
+      "version": "0.3.0",
       "wasm": {
-        "sha256": "3225dccda9fb459e149198d195dc1db4a386a3f7a62591a36e900d427624e7ca",
-        "size": 1203359,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/im-v0.2.0/im.wasm"
+        "sha256": "8d14bb9d7aaa5ed90aa867723b78d36cf02eae34b517448f988044336def92d6",
+        "size": 1218091,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/im-v0.3.0/im.wasm"
       },
       "versions": [
         {
@@ -3277,6 +3293,10 @@
         {
           "version": "0.2.0",
           "abi": 1
+        },
+        {
+          "version": "0.3.0",
+          "abi": 5
         }
       ]
     },
@@ -3345,9 +3365,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/invoices",
-        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
-      "abi": 1,
+      "abi": 5,
       "help": {
         "module": "invoices",
         "guide": "FOR\n  Invoices (aggregate invoice) that take a scan, a file. An invoice is\n  identified by an invoice_id the caller makes up; its state is how many\n  scans it took.\n\nFLOWS\n  Attach: upload the scan first (bk file put answers the file), then\n  invoice.attach writes ScanAttached. The read model puts the scan and the\n  person who attached it into table scans. A person or an agent applies it.\n\nBUILDING ON IT\n  Read the view invoice.scans (table scans, filter by invoice_id) to get an\n  invoice's scan and attached_by. attached_by is the person: who an agent\n  acted for, else who applied the command. The scan column is a file\n  column, so whoever may see the row by a grant whose condition reads\n  attached_by may also download the scan. No processes, tasks or settings\n  to set first. Add a recommended grant of your own for the people who may\n  read scans; the module declares none.\n\nTRIPS\n  The scan must be a PDF or an image of at most 1 MiB; a larger or other\n  file is rejected before the command runs.\n  Attaching again to the same invoice adds a second scan event, but the\n  scans table keeps one row per invoice, the latest scan and its attacher.\n",
@@ -3411,6 +3431,7 @@
         "actions": [],
         "settings": [],
         "data": [],
+        "sequences": [],
         "read_model": {
           "aggregates": [
             "invoice"
@@ -3472,11 +3493,11 @@
       "setup_order": [
         "invoices"
       ],
-      "version": "0.2.0",
+      "version": "0.3.0",
       "wasm": {
-        "sha256": "b3d0469360e8ef3a2179fb9b3d772731c5fe833b66b5b4ea917808bf8a642d43",
-        "size": 395835,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/invoices-v0.2.0/invoices.wasm"
+        "sha256": "41d1667d415b8f4e056abd85c56b82added25291dfa5ff09b82f648cb229ecbd",
+        "size": 400947,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/invoices-v0.3.0/invoices.wasm"
       },
       "versions": [
         {
@@ -3486,6 +3507,10 @@
         {
           "version": "0.2.0",
           "abi": 1
+        },
+        {
+          "version": "0.3.0",
+          "abi": 5
         }
       ]
     },
@@ -3499,9 +3524,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/loyalty",
-        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
-      "abi": 1,
+      "abi": 5,
       "help": {
         "module": "loyalty",
         "guide": "FOR\n  Loyalty points. A member's points account (aggregate points) is\n  identified by a member_id the caller makes up; it holds a balance, the\n  total earned and redeemed, and holds: points set aside for a while that\n  no redeeming or other hold may take. The balance never goes below zero.\n\nFLOWS\n  Earn: points.earn credits points for a reason (e.g. the order id) and\n  writes PointsEarned. Anyone applies it, including a worker or an agent.\n  Redeem: points.redeem spends points on a reward and writes\n  PointsRedeemed. Only the member applies it, signed in as themself; an\n  agent is refused.\n  Hold: points.hold sets points aside for some minutes (at most a week)\n  and writes PointsHeld, plus a scheduled points.expire for the deadline.\n  Then either points.release gives them back now (HoldReleased), or the\n  kernel runs points.expire when the time is up (HoldExpired). Expire\n  does nothing if the hold is gone or was held again until later.\n  Transfer: start the process transfer (bk apply transfer.start) with\n  transfer_id, from, to and points. Steps: redeem from the sender\n  (points.redeem), earn for the receiver (points.earn); if the receiver\n  is refused, a refund earns the points back for the sender. It ends\n  completed, failed (nothing moved, or given back), or stuck when even\n  the refund was refused: then credit the points by hand.\n\nBUILDING ON IT\n  Read the view points.accounts (table accounts: member_id, balance,\n  earned, redeemed, updated_at), highest balance first; filter by member_id\n  or a balance range. It does not show holds: the balance there includes\n  held points, so the points available are in the account's state (bk\n  state points <member_id>), balance less holds.\n  Another module credits points by applying points.earn from its process,\n  with a reason such as its order id. It may start on PointsEarned,\n  PointsRedeemed, PointsHeld, HoldReleased or HoldExpired of aggregate\n  points. No tasks, settings or grants are declared.\n\nTRIPS\n  Redeem and hold are limited by the balance not held, not the balance:\n  insufficient_points names what is available. Redeeming by an agent is\n  wrong_actor.\n  A reason is required to earn (missing_reason); points are at least 1.\n  Holding with an existing hold_id replaces that hold, its points and its\n  deadline; use a new uuid for a second hold. Releasing a hold that is\n  gone is rejected (not_held).\n  Starting transfer again with the same input resumes it; a new transfer\n  needs a new transfer_id.\n",
@@ -3883,6 +3908,7 @@
         "actions": [],
         "settings": [],
         "data": [],
+        "sequences": [],
         "read_model": {
           "aggregates": [
             "points"
@@ -3953,11 +3979,11 @@
       "setup_order": [
         "loyalty"
       ],
-      "version": "0.2.0",
+      "version": "0.3.0",
       "wasm": {
-        "sha256": "b52de7f8c10a7cbb025e569d94dd9168c6dc9483dab2e393bd09fe63072bff8e",
-        "size": 531270,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/loyalty-v0.2.0/loyalty.wasm"
+        "sha256": "faa746b75758330cd11ce299c35467b0b4edaea65029c718cdb6de8384054c86",
+        "size": 538012,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/loyalty-v0.3.0/loyalty.wasm"
       },
       "versions": [
         {
@@ -3967,6 +3993,10 @@
         {
           "version": "0.2.0",
           "abi": 1
+        },
+        {
+          "version": "0.3.0",
+          "abi": 5
         }
       ]
     },
@@ -3980,8 +4010,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/mqtt-intake",
-        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
+      "abi": 5,
       "follows": "an MQTT broker's topics, as its config (--config) names them and the command each message is applied as",
       "needs": [],
       "grants": [
@@ -4005,16 +4036,20 @@
       "setup_order": [
         "mqtt-intake"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "wasm": {
-        "sha256": "b1bfa0b840af463e20073ae952ac490d290072dd17f4d5d9443e01be6bb2a3be",
-        "size": 305882,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/mqtt-intake-v0.1.0/mqtt-intake.wasm"
+        "sha256": "c77f4b256cf34c4c7602b7bb742a7a3590afd8e2c9f016cd54618bbdc0384139",
+        "size": 323093,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/mqtt-intake-v0.2.0/mqtt-intake.wasm"
       },
       "versions": [
         {
           "version": "0.1.0",
           "abi": null
+        },
+        {
+          "version": "0.2.0",
+          "abi": 5
         }
       ]
     },
@@ -4028,9 +4063,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/order",
-        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
-      "abi": 1,
+      "abi": 5,
       "help": {
         "module": "order",
         "guide": "FOR\n  A pick-up order (mobile order and pay) at a store: a customer places it,\n  its lines priced from the store's catalogue, the payment provider\n  authorises its total, the store is sent it, and the payment is captured\n  when it is picked up. The one aggregate is pickup_order: one order, a\n  stream named pickup_order/<order_id>. Amounts are whole yen, tax included\n  in the total. Each call out waits for an answer: succeeded, failed or\n  unknown.\n\nFLOWS\n  Happy path (state names in brackets):\n  1 pickup_order.place by the customer (an agent acts for them): reads the\n    store's catalogue, records OrderPlaced with the lines as priced [placed].\n  2 OrderPlaced starts process pickup_authorisation: it applies\n    pickup_order.authorise, calls action payment.authorise, then applies\n    pickup_order.answer [authorising, authorised]. If the provider answers\n    with a redirect, the process waits for the provider's callback, applied\n    as pickup_order.call_back; none in time fails the order and releases\n    the payment (payment.release), even one paid by a late callback.\n  3 Someone with the system role applies pickup_order.send [authorised ->\n    sending to store]. SendStarted starts process sending, which queues task\n    order.send_to_store (the hosted order-send worker posts it to the\n    store, one order at a time per store) and applies pickup_order.answer\n    [sent, send failed, or send unknown].\n  4 At pick-up the payment system applies pickup_order.capture [sent ->\n    capturing]. CaptureStarted starts process pickup_capture, which calls\n    payment.capture and applies pickup_order.answer [captured].\n  Cancel: pickup_order.cancel from authorised, sent, send failed or capture\n  failed [deauthorising -> deauthorised]. Refund: an admin applies\n  pickup_order.refund on a captured order [refunding -> refunded].\n  No process in this module works cancelling or refunding: the system\n  called applies pickup_order.answer itself.\n  Unknown: a lost answer is first reconciled (the processes ask the\n  provider with payment.find); a state still waiting when its time is up\n  becomes unknown (pickup_order.time_out, run by the kernel). An admin\n  settles an unknown one with pickup_order.confirm (it succeeded) or\n  pickup_order.deny (it failed).\n\nBUILDING ON IT\n  Start your process on pickup_order OrderPlaced (a new order and its\n  total), SendStarted, CaptureStarted, or the settled results\n  CallAnswered, AnswerConfirmed, AnswerDenied, OrderCancelled.\n  No views or tables: read an order with bk state pickup_order <id>.\n  Apply: pickup_order.place (customer), authorise, send, capture, answer,\n  call_back (systems), cancel (anyone but a timer), refund, confirm, deny\n  (an admin; an agent is never one).\n  Set up first: publish each store's catalogue (data.publish, data\n  order.catalogue, key the store), set the store's key as secret\n  order/STORE_KEY[<store>], install the order-send worker (or no send ever\n  finishes: task order.send_to_store must be worked), point the actions\n  payment.authorise, payment.capture, payment.find and payment.release at\n  the provider's system (BIZKERNEL_ACTIONS), and make the provider's\n  webhook apply pickup_order.call_back; the module declares no webhook.\n  No recommended grants are declared; grant by the actors named above.\n\nTRIPS\n  Make up a new uuid order_id for each order; a reused one is refused\n  (already_placed). Publish the store's catalogue before the first order\n  (no_catalogue). The store is a key of ASCII letters, digits, - _ and .;\n  its address an https URL. Items and components are named exactly as the\n  catalogue names them (unknown_item, unknown_component); a sold-out item\n  is refused (sold_out). A catalogue published later changes no placed\n  order. A discount larger than its line only takes the line to 0; an\n  order whose total is 0 is refused (nothing_to_pay).\n  wrong_actor is the common rejection: each command has its own actor\n  (above). not_now means the order is in another state; finished means it\n  is in a state nothing leads out of (authorise failed, deauthorised,\n  deauthorise failed, refunded, refund failed).\n  capture and refund take an amount: left out, all that is authorised or\n  captured; 0 is refused (no_amount), more is refused (more_than_authorised,\n  more_than_captured).\n  Authorise, capture and sending to a store are done at most once, never\n  retried: a call without an answer ends unknown, for an admin.\n",
@@ -5398,6 +5433,7 @@
             }
           }
         ],
+        "sequences": [],
         "read_model": null,
         "webhooks": [],
         "recurring": [],
@@ -5433,11 +5469,11 @@
         "order",
         "order-send"
       ],
-      "version": "0.2.0",
+      "version": "0.3.0",
       "wasm": {
-        "sha256": "e5a7417f71b6dcec2f3cc7b708e4c6e1dbafb7186827086d7037e3b560f255af",
-        "size": 775932,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/order-v0.2.0/order.wasm"
+        "sha256": "23e9f5f691629a9ce5abb561f5bedf4944b1db6c5771a27128651ea7ebff29e7",
+        "size": 784220,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/order-v0.3.0/order.wasm"
       },
       "versions": [
         {
@@ -5447,6 +5483,10 @@
         {
           "version": "0.2.0",
           "abi": 1
+        },
+        {
+          "version": "0.3.0",
+          "abi": 5
         }
       ]
     },
@@ -5460,8 +5500,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/order-send",
-        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
+      "abi": 5,
       "works": [
         "order.send_to_store"
       ],
@@ -5491,16 +5532,20 @@
       "setup_order": [
         "order-send"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "wasm": {
-        "sha256": "4150feb76d6f142a8cdb4520b01f5e6e50bffc4e3c8670c4e4f1bfffed560dc0",
-        "size": 222316,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/order-send-v0.1.0/order-send.wasm"
+        "sha256": "3cd93829d83c9e47ad668ec8e849637cb54c411c533007a845f5ed7f605101ea",
+        "size": 280553,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/order-send-v0.2.0/order-send.wasm"
       },
       "versions": [
         {
           "version": "0.1.0",
           "abi": null
+        },
+        {
+          "version": "0.2.0",
+          "abi": 5
         }
       ]
     },
@@ -5514,9 +5559,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/questions",
-        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
-      "abi": 1,
+      "abi": 5,
       "help": {
         "module": "questions",
         "guide": "FOR\n  Questions put to Claude, with the answers recorded. A question (aggregate\n  question) is identified by a question_id the caller makes up; it is\n  answered once, by one model.\n\nFLOWS\n  Ask: start the process answering (bk apply answering.start, with a new\n  question_id as the key's stream) with a prompt.\n  1. It queues a task of type claude.ask (step ask).\n  2. A hosted worker, claude-ask, claims it, calls the Claude Messages API\n     and streams the text to the task's output (bk task watch <task>\n     shows it as it is written); it completes the task with the whole\n     answer and the model.\n  3. The process applies question.answer (step record), which writes\n     QuestionAnswered; the process completes.\n  If the ask fails for good the process fails with the worker's error; if\n  the worker answers without an answer and model it is stuck for a person.\n  question.answer can also be applied by hand.\n\nBUILDING ON IT\n  Another module's process may start answering through its own command and\n  later read the question's state (answer, model) with bk state question\n  <question_id>, or start on QuestionAnswered of aggregate question.\n  The claude.ask task must be worked: install the claude-ask worker, or\n  nothing finishes. Set its secret questions/ANTHROPIC_API_KEY first.\n  Allow the worker to reach the API host; an api_url elsewhere needs its\n  host allowed too.\n\nTRIPS\n  A second answer to the same question_id is rejected (already_answered):\n  use a new id for a new question.\n  Starting answering again with the same input resumes it rather than\n  asking twice.\n  A stop_reason of max_tokens means the answer was cut short; it is still\n  recorded.\n  model is optional in the input: left empty the worker chooses.\n",
@@ -5671,6 +5716,7 @@
         "actions": [],
         "settings": [],
         "data": [],
+        "sequences": [],
         "read_model": null,
         "webhooks": [],
         "recurring": [],
@@ -5706,11 +5752,11 @@
         "questions",
         "claude-ask"
       ],
-      "version": "0.2.0",
+      "version": "0.3.0",
       "wasm": {
-        "sha256": "47f3d3e2fd9293b2779e083744dec5619580f6ba32da62e61cc8def8a8bf5d15",
-        "size": 402840,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/questions-v0.2.0/questions.wasm"
+        "sha256": "8e602d2b8a7d8591f779ea724dc5b4ad811672a2b8be05ca5e8cc4d96bb8dc40",
+        "size": 408109,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/questions-v0.3.0/questions.wasm"
       },
       "versions": [
         {
@@ -5720,6 +5766,10 @@
         {
           "version": "0.2.0",
           "abi": 1
+        },
+        {
+          "version": "0.3.0",
+          "abi": 5
         }
       ]
     },
@@ -5734,8 +5784,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/report-render",
-        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
+      "abi": 5,
       "works": [
         "report.render"
       ],
@@ -5766,16 +5817,20 @@
       "setup_order": [
         "report-render"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "wasm": {
-        "sha256": "b5e4de67ec70b067f0621e76f5e79d45e5913cfad6872e8c31f3ac3d51d067c5",
-        "size": 272127,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/report-render-v0.1.0/report-render.wasm"
+        "sha256": "2aef23b82637b0d3996ac59515fcfb2b67412a80797c0883d94417063b180f1f",
+        "size": 291532,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/report-render-v0.2.0/report-render.wasm"
       },
       "versions": [
         {
           "version": "0.1.0",
           "abi": null
+        },
+        {
+          "version": "0.2.0",
+          "abi": 5
         }
       ]
     },
@@ -5789,9 +5844,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/reports",
-        "commit": "54e4c1976c7121da007d9619e512d755392652ff"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
-      "abi": 1,
+      "abi": 5,
       "help": {
         "module": "reports",
         "guide": "FOR\n  Reports rendered to a PDF by a worker that can run anywhere, then\n  published or delivered. A report (aggregate report) is identified by a\n  report_id the caller makes up; it ends published (with its PDF and page\n  count) or abandoned (with why), never both.\n\nFLOWS\n  Publish: upload the data CSV (bk file put), then start the process\n  publishing (bk apply publishing.start) with report_id, title, rows and\n  data.\n  1. It queues a task of type report.render (step render).\n  2. A worker claims it, reads the data file, renders a PDF and completes\n     the task with the PDF file and page count.\n  3. The process applies report.publish (step publish), which writes\n     ReportPublished; the process completes.\n  If the render fails for good (its attempts or timeout run out, or the\n  task is cancelled), the process applies report.abandon (step abandon),\n  which writes ReportAbandoned, and fails.\n  Deliver: start the process delivering with a delivery_id, a store and a\n  title. It queues a task of type report.deliver ordered by the store; the\n  worker answers the store's receipt and the process completes, or fails\n  with why.\n\nBUILDING ON IT\n  No view or table is declared: read a report with bk state report\n  <report_id> (report file, pages, abandoned). Another module's process may\n  start on ReportPublished or ReportAbandoned of aggregate report: the\n  first means the PDF is final, the second means it never will be.\n  Workers must work both task types or nothing finishes: report.render\n  (the example worker is self-hosted, report-render) and report.deliver.\n  No settings or grants to set first.\n\nTRIPS\n  Publishing a published report is rejected (already_published), as is\n  changing an abandoned one (already_abandoned): use a new report_id.\n  Abandoning a published report is rejected too; published stays published.\n  Rows and pages must be at least 1.\n  Deliveries to one store run one at a time, in the order started, at\n  most one a second; other stores' deliveries run beside them. A delivery\n  is tried once and fails if the store refuses.\n  Starting a process again with the same input resumes it; a new\n  delivery_id is a new delivery.\n",
@@ -6069,6 +6124,7 @@
         "actions": [],
         "settings": [],
         "data": [],
+        "sequences": [],
         "read_model": null,
         "webhooks": [],
         "recurring": [],
@@ -6108,11 +6164,11 @@
         "reports",
         "report-render"
       ],
-      "version": "0.2.0",
+      "version": "0.3.0",
       "wasm": {
-        "sha256": "8cacd79ba6a75d2b90adfd01e4cba6f0b6c4737c1d86def525d77c65126d0206",
-        "size": 450191,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/reports-v0.2.0/reports.wasm"
+        "sha256": "eca2a80f7ae2a86404e9d39b5d9ebf816a0cccbebd1f9a06e8ceea6bf5a267ec",
+        "size": 455374,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/reports-v0.3.0/reports.wasm"
       },
       "versions": [
         {
@@ -6122,6 +6178,10 @@
         {
           "version": "0.2.0",
           "abi": 1
+        },
+        {
+          "version": "0.3.0",
+          "abi": 5
         }
       ]
     },
@@ -6136,8 +6196,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/voice-transcode",
-        "commit": "6a948e5cd5ab91278434233d3cac0c96d7ce2260"
+        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
       },
+      "abi": 5,
       "works": [
         "voice.transcode"
       ],
@@ -6168,16 +6229,20 @@
       "setup_order": [
         "voice-transcode"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "wasm": {
-        "sha256": "2f8f3036794c2e8b822a97ec6c8abf84faebaccf5209392a8ef8035b4c5535f3",
-        "size": 834829,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/voice-transcode-v0.1.0/voice-transcode.wasm"
+        "sha256": "b4362ad2167751fc5dc68fad3d97f03c1ac21ffe572a319c13bbe60b30905f20",
+        "size": 854724,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/voice-transcode-v0.2.0/voice-transcode.wasm"
       },
       "versions": [
         {
           "version": "0.1.0",
           "abi": null
+        },
+        {
+          "version": "0.2.0",
+          "abi": 5
         }
       ]
     },
