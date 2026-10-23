@@ -512,9 +512,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/file-intake",
-        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
+        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
       },
-      "abi": 5,
+      "abi": 6,
       "follows": "a file on this machine, each new line a JSON object applied as the command it is given",
       "needs": [],
       "grants": [
@@ -535,7 +535,7 @@
       "setup_order": [
         "file-intake"
       ],
-      "version": "0.5.0",
+      "version": "0.6.0",
       "versions": [
         {
           "version": "0.2.0",
@@ -552,6 +552,10 @@
         {
           "version": "0.5.0",
           "abi": 5
+        },
+        {
+          "version": "0.6.0",
+          "abi": 6
         }
       ]
     },
@@ -3342,9 +3346,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/im-transcribe",
-        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
+        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
       },
-      "abi": 5,
+      "abi": 6,
       "works": [
         "voice.transcribe"
       ],
@@ -3371,7 +3375,7 @@
       "setup_order": [
         "im-transcribe"
       ],
-      "version": "0.5.0",
+      "version": "0.6.0",
       "versions": [
         {
           "version": "0.2.0",
@@ -3388,6 +3392,10 @@
         {
           "version": "0.5.0",
           "abi": 5
+        },
+        {
+          "version": "0.6.0",
+          "abi": 6
         }
       ]
     },
@@ -6404,9 +6412,9 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/wechat-intake",
-        "commit": "cce0e15401490c95cbec7e87a858bbdaf5e0ac91"
+        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
       },
-      "abi": 5,
+      "abi": 6,
       "follows": "a WeChat for Mac 4.x account logged in on this Mac, the chats picked from it",
       "applies": "im",
       "needs": [
@@ -6443,7 +6451,7 @@
         "voice-transcode",
         "wechat-intake"
       ],
-      "version": "0.5.0",
+      "version": "0.6.0",
       "versions": [
         {
           "version": "0.2.0",
@@ -6460,6 +6468,10 @@
         {
           "version": "0.5.0",
           "abi": 5
+        },
+        {
+          "version": "0.6.0",
+          "abi": 6
         }
       ]
     }
