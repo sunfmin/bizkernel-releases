@@ -5635,7 +5635,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "apps/pick_one",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "baf8246f9363f4f0adbea37d9261fd2308cd35dd"
       },
       "version": "0.1.0",
       "guide": "FOR\n  An agent that needs a person to choose: it offers the options, each with\n  the reason for it, and gets back the one they picked and their note.\n\nASK\n  Install it once, for yourself (bk app install --from-catalog pick_one),\n  then ask in its route \"choose\":\n\n    bk app ask pick_one --route choose --to <person> --wait --args '{\n      \"question\": \"Which carrier ships the Osaka order?\",\n      \"options\": [\n        {\"option\": \"Yamato\", \"reason\": \"arrives tomorrow, 1200 yen\"},\n        {\"option\": \"Sagawa\", \"reason\": \"arrives in two days, 900 yen\"}\n      ]}'\n\n  args: question, what is asked (a string); options, at least one, each\n  an option (a string, unique among them) and the reason for it (a\n  string, may be \"\").\n\nANSWER\n  {\"option\": <the option picked, as it was given>, \"note\": <what the person\n  added, \"\" when nothing>}: the kernel holds the answer to that shape.\n\nTRIPS\n  The person asked opens the link bk prints; nobody else may answer.\n  Args not of this shape are shown to the person as what is wrong with\n  them, and they cannot answer: ask again with args of this shape.\n",
