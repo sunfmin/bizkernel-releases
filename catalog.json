@@ -526,7 +526,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/file-intake",
-        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
+        "commit": "7fb8844d5444bcaa112d79d110952632d560f0ff"
       },
       "abi": 6,
       "follows": "a file on this machine, each new line a JSON object applied as the command it is given",
@@ -549,7 +549,7 @@
       "setup_order": [
         "file-intake"
       ],
-      "version": "0.6.2",
+      "version": "0.6.3",
       "versions": [
         {
           "version": "0.2.0",
@@ -577,6 +577,10 @@
         },
         {
           "version": "0.6.2",
+          "abi": 6
+        },
+        {
+          "version": "0.6.3",
           "abi": 6
         }
       ]
@@ -3373,7 +3377,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/im-transcribe",
-        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
+        "commit": "7fb8844d5444bcaa112d79d110952632d560f0ff"
       },
       "abi": 6,
       "works": [
@@ -3402,7 +3406,7 @@
       "setup_order": [
         "im-transcribe"
       ],
-      "version": "0.6.2",
+      "version": "0.6.3",
       "versions": [
         {
           "version": "0.2.0",
@@ -3430,6 +3434,10 @@
         },
         {
           "version": "0.6.2",
+          "abi": 6
+        },
+        {
+          "version": "0.6.3",
           "abi": 6
         }
       ]
@@ -6488,7 +6496,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/wechat-intake",
-        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
+        "commit": "7fb8844d5444bcaa112d79d110952632d560f0ff"
       },
       "abi": 6,
       "follows": "a WeChat for Mac 4.x account logged in on this Mac, the chats picked from it",
@@ -6527,7 +6535,7 @@
         "voice-transcode",
         "wechat-intake"
       ],
-      "version": "0.6.2",
+      "version": "0.6.3",
       "versions": [
         {
           "version": "0.2.0",
@@ -6555,6 +6563,10 @@
         },
         {
           "version": "0.6.2",
+          "abi": 6
+        },
+        {
+          "version": "0.6.3",
           "abi": 6
         }
       ]
