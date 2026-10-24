@@ -522,11 +522,11 @@
       "runs": [
         "self_hosted"
       ],
-      "for": "The example self-hosted intake (ADR 71): follows a local file, each new line applied as its module's command, and continues where it stopped.",
+      "for": "The example self-hosted intake: follows a local file, each new line applied as its module's command, and continues where it stopped.",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/file-intake",
-        "commit": "baf8246f9363f4f0adbea37d9261fd2308cd35dd"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "follows": "a file on this machine, each new line a JSON object applied as the command it is given",
@@ -549,7 +549,7 @@
       "setup_order": [
         "file-intake"
       ],
-      "version": "0.6.1",
+      "version": "0.6.2",
       "versions": [
         {
           "version": "0.2.0",
@@ -573,6 +573,10 @@
         },
         {
           "version": "0.6.1",
+          "abi": 6
+        },
+        {
+          "version": "0.6.2",
           "abi": 6
         }
       ]
@@ -3365,11 +3369,11 @@
       "runs": [
         "self_hosted"
       ],
-      "for": "The worker the im module's transcribing process transcribes voice messages through (ADR 31, 79): run on the person's own Mac, it decodes a voice by its content type (WeChat's SILK) and hears it with SenseVoice-Small through sherpa-onnx, loaded when it starts, answering the text, the model and its version.",
+      "for": "The worker the im module's transcribing process transcribes voice messages through: run on the person's own Mac, it decodes a voice by its content type (WeChat's SILK) and hears it with SenseVoice-Small through sherpa-onnx, loaded when it starts, answering the text, the model and its version.",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/im-transcribe",
-        "commit": "baf8246f9363f4f0adbea37d9261fd2308cd35dd"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "works": [
@@ -3398,7 +3402,7 @@
       "setup_order": [
         "im-transcribe"
       ],
-      "version": "0.6.1",
+      "version": "0.6.2",
       "versions": [
         {
           "version": "0.2.0",
@@ -3422,6 +3426,10 @@
         },
         {
           "version": "0.6.1",
+          "abi": 6
+        },
+        {
+          "version": "0.6.2",
           "abi": 6
         }
       ]
@@ -6476,11 +6484,11 @@
       "runs": [
         "self_hosted"
       ],
-      "for": "The self-hosted intake (ADR 71) that imports the chats a person picks from WeChat for Mac 4.x into the im module, each message as its kind.",
+      "for": "The self-hosted intake that imports the chats a person picks from WeChat for Mac 4.x into the im module, each message as its kind.",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/wechat-intake",
-        "commit": "baf8246f9363f4f0adbea37d9261fd2308cd35dd"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "follows": "a WeChat for Mac 4.x account logged in on this Mac, the chats picked from it",
@@ -6519,7 +6527,7 @@
         "voice-transcode",
         "wechat-intake"
       ],
-      "version": "0.6.1",
+      "version": "0.6.2",
       "versions": [
         {
           "version": "0.2.0",
@@ -6543,6 +6551,10 @@
         },
         {
           "version": "0.6.1",
+          "abi": 6
+        },
+        {
+          "version": "0.6.2",
           "abi": 6
         }
       ]
