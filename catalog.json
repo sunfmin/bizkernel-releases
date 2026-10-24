@@ -6,11 +6,11 @@
       "runs": [
         "hosted"
       ],
-      "for": "The example hosted worker the questions module's answering process asks Claude through (ADR 32, 33, 35): it streams the Messages API's answer to the task's output as it arrives, and completes the task with the whole answer. The API key is a header the kernel adds; the worker never sees it.",
+      "for": "The example hosted worker the questions module's answering process asks Claude through: it streams the Messages API's answer to the task's output as it arrives, and completes the task with the whole answer. The API key is a header the kernel adds; the worker never sees it.",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/claude-ask",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "works": [
@@ -42,11 +42,11 @@
       "setup_order": [
         "claude-ask"
       ],
-      "version": "0.2.1",
+      "version": "0.2.2",
       "wasm": {
-        "sha256": "1e4f5ef3889849ef6a4e66400781dfeffe1f5eae82441ecdddb27754c0bea932",
-        "size": 392552,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/claude-ask-v0.2.1/claude-ask.wasm"
+        "sha256": "789595cb9daebffcd81c6ed5dc251bbd801d850ae827f375a9aa95058c00aeda",
+        "size": 392557,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/claude-ask-v0.2.2/claude-ask.wasm"
       },
       "versions": [
         {
@@ -60,6 +60,10 @@
         {
           "version": "0.2.1",
           "abi": 6
+        },
+        {
+          "version": "0.2.2",
+          "abi": 6
         }
       ]
     },
@@ -69,11 +73,11 @@
       "runs": [
         "hosted"
       ],
-      "for": "Example bizkernel module in Rust: customers whose name and email are personal data (ADR 28)",
+      "for": "Example bizkernel module in Rust: customers whose name and email are personal data: sealed with the customer's key, and read as [redacted] once the customer is forgotten",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/customers",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "help": {
@@ -269,7 +273,8 @@
         "person_history": {
           "events": []
         },
-        "principal_attributes": []
+        "principal_attributes": [],
+        "apps": []
       },
       "queues": [],
       "needs": [],
@@ -287,11 +292,11 @@
       "setup_order": [
         "customers"
       ],
-      "version": "0.3.1",
+      "version": "0.3.2",
       "wasm": {
-        "sha256": "dad84508896ce3c81f9fc7ee2a6c86e82f32e61cf874753456dddad229d3fc4a",
-        "size": 498067,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/customers-v0.3.1/customers.wasm"
+        "sha256": "66823e869127f5bd3573aee9adb3be38d7bae47d520f70f7442030dd10ca211e",
+        "size": 500012,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/customers-v0.3.2/customers.wasm"
       },
       "versions": [
         {
@@ -309,6 +314,10 @@
         {
           "version": "0.3.1",
           "abi": 6
+        },
+        {
+          "version": "0.3.2",
+          "abi": 6
         }
       ]
     },
@@ -318,11 +327,11 @@
       "runs": [
         "hosted"
       ],
-      "for": "Example bizkernel module in Rust: devices report what they measure through an intake (the MQTT intake, ADR 40)",
+      "for": "Example bizkernel module in Rust: devices report what they measure through an intake (the MQTT intake)",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/devices",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "help": {
@@ -459,7 +468,8 @@
         "person_history": {
           "events": []
         },
-        "principal_attributes": []
+        "principal_attributes": [],
+        "apps": []
       },
       "queues": [],
       "needs": [],
@@ -477,11 +487,11 @@
       "setup_order": [
         "devices"
       ],
-      "version": "0.3.2",
+      "version": "0.3.3",
       "wasm": {
-        "sha256": "549dcbdd5a9ea5b91cf4b830a8ffe2fbd5a6fd954e015de8820ab8ed89cfab84",
-        "size": 476757,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/devices-v0.3.2/devices.wasm"
+        "sha256": "228f2f7f4f570fdb48f669c55c47ce59080a0b53229bcc1293e182ff668bd5f7",
+        "size": 478694,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/devices-v0.3.3/devices.wasm"
       },
       "versions": [
         {
@@ -498,6 +508,10 @@
         },
         {
           "version": "0.3.2",
+          "abi": 6
+        },
+        {
+          "version": "0.3.3",
           "abi": 6
         }
       ]
@@ -573,7 +587,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/im",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "help": {
@@ -2671,7 +2685,7 @@
           {
             "doc": "Transcode a voice message to Ogg Opus as its transcode is requested (task voice.transcode), then record the copy on the message; when the worker fails, fail saying why, the message as it was.",
             "input": {
-              "description": "The input of a process that starts on an event (ADR 48): the event as it was recorded, its `data` decoded as `D`.",
+              "description": "The input of a process that starts on an event: the event as it was recorded, its `data` decoded as `D`.",
               "properties": {
                 "data": {
                   "description": "What the transcoding process reads of the TranscodeRequested it starts on.",
@@ -2734,7 +2748,7 @@
           {
             "doc": "Transcribe a voice message as its transcribe is requested (task voice.transcribe), beside its transcode, then record the text with its model and version on the message; when the worker fails, fail saying why, the message as it was.",
             "input": {
-              "description": "The input of a process that starts on an event (ADR 48): the event as it was recorded, its `data` decoded as `D`.",
+              "description": "The input of a process that starts on an event: the event as it was recorded, its `data` decoded as `D`.",
               "properties": {
                 "data": {
                   "description": "What the transcribing process reads of the TranscribeRequested it starts on.",
@@ -3268,7 +3282,8 @@
         "person_history": {
           "events": []
         },
-        "principal_attributes": []
+        "principal_attributes": [],
+        "apps": []
       },
       "queues": [
         {
@@ -3315,11 +3330,11 @@
         "im-transcribe",
         "voice-transcode"
       ],
-      "version": "0.3.2",
+      "version": "0.3.3",
       "wasm": {
-        "sha256": "57f982086c5dde5c75d180eba5f04c77c7c409fc0d50ab8ac1436e087defddf9",
-        "size": 1295260,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/im-v0.3.2/im.wasm"
+        "sha256": "f19c795d0a94001f7e33a92f9c6da294eff218c636714a3789e6945a85064ae1",
+        "size": 1297138,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/im-v0.3.3/im.wasm"
       },
       "versions": [
         {
@@ -3336,6 +3351,10 @@
         },
         {
           "version": "0.3.2",
+          "abi": 6
+        },
+        {
+          "version": "0.3.3",
           "abi": 6
         }
       ]
@@ -3413,11 +3432,11 @@
       "runs": [
         "hosted"
       ],
-      "for": "Example bizkernel module in Rust: an invoice takes a scan, which its row holds in a file column, so whoever may see the row may download it (ADR 75)",
+      "for": "Example bizkernel module in Rust: an invoice takes a scan, which its row holds in a file column, so whoever may see the row may download it",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/invoices",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "help": {
@@ -3531,7 +3550,8 @@
         "person_history": {
           "events": []
         },
-        "principal_attributes": []
+        "principal_attributes": [],
+        "apps": []
       },
       "queues": [],
       "needs": [],
@@ -3549,11 +3569,11 @@
       "setup_order": [
         "invoices"
       ],
-      "version": "0.3.2",
+      "version": "0.3.3",
       "wasm": {
-        "sha256": "81e4b50dcc4ef445a964f87a1b464cb4990e3bfe0a607dcf942ee0d4b46bb721",
-        "size": 472442,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/invoices-v0.3.2/invoices.wasm"
+        "sha256": "ad6475d72b25a439b9426c242e9de4484ddeebad140b50220d91ee834e11beb8",
+        "size": 474364,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/invoices-v0.3.3/invoices.wasm"
       },
       "versions": [
         {
@@ -3571,6 +3591,10 @@
         {
           "version": "0.3.2",
           "abi": 6
+        },
+        {
+          "version": "0.3.3",
+          "abi": 6
         }
       ]
     },
@@ -3584,7 +3608,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/loyalty",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "help": {
@@ -3807,7 +3831,7 @@
             "shapes": {
               "CommandScheduled": {
                 "data": {
-                  "description": "A command the kernel runs once its now reaches at (ADR 13).",
+                  "description": "A command the kernel runs once its now reaches at.",
                   "properties": {
                     "at": {
                       "format": "date-time",
@@ -4025,7 +4049,8 @@
         "person_history": {
           "events": []
         },
-        "principal_attributes": []
+        "principal_attributes": [],
+        "apps": []
       },
       "queues": [],
       "needs": [],
@@ -4043,11 +4068,11 @@
       "setup_order": [
         "loyalty"
       ],
-      "version": "0.3.1",
+      "version": "0.3.2",
       "wasm": {
-        "sha256": "308c3255280dfbfada01ca8fdf1d772eedb274f31f929b65e26f718c26aaaa4b",
-        "size": 607486,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/loyalty-v0.3.1/loyalty.wasm"
+        "sha256": "25d995f304ca86e1761ab55c379bc98d2613f483311e3fef2c2886463ed0310d",
+        "size": 609417,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/loyalty-v0.3.2/loyalty.wasm"
       },
       "versions": [
         {
@@ -4065,6 +4090,10 @@
         {
           "version": "0.3.1",
           "abi": 6
+        },
+        {
+          "version": "0.3.2",
+          "abi": 6
         }
       ]
     },
@@ -4074,11 +4103,11 @@
       "runs": [
         "hosted"
       ],
-      "for": "The example intake (ADR 40): it keeps a session with an MQTT broker (3.1.1 or 5, QoS 0 and 1) and applies a module's command with each message, acknowledging it only once the apply answered.",
+      "for": "The example intake: it keeps a session with an MQTT broker (3.1.1 or 5, QoS 0 and 1) and applies a module's command with each message, acknowledging it only once the apply answered.",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/mqtt-intake",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "follows": "an MQTT broker's topics, as its config (--config) names them and the command each message is applied as",
@@ -4104,11 +4133,11 @@
       "setup_order": [
         "mqtt-intake"
       ],
-      "version": "0.2.2",
+      "version": "0.2.3",
       "wasm": {
-        "sha256": "22de7f582e77f11b2d459673e84edf846b89974cd966ca8fc11b61b105ebc2b0",
-        "size": 421221,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/mqtt-intake-v0.2.2/mqtt-intake.wasm"
+        "sha256": "f4b925173377c1439f27a914b28d8324fee1fe9f3f220715ee00053edea473fb",
+        "size": 421228,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/mqtt-intake-v0.2.3/mqtt-intake.wasm"
       },
       "versions": [
         {
@@ -4121,6 +4150,10 @@
         },
         {
           "version": "0.2.2",
+          "abi": 6
+        },
+        {
+          "version": "0.2.3",
           "abi": 6
         }
       ]
@@ -4135,7 +4168,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/order",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "help": {
@@ -4972,7 +5005,7 @@
               },
               "CommandScheduled": {
                 "data": {
-                  "description": "A command the kernel runs once its now reaches at (ADR 13).",
+                  "description": "A command the kernel runs once its now reaches at.",
                   "properties": {
                     "at": {
                       "format": "date-time",
@@ -5207,7 +5240,7 @@
           {
             "doc": "Authorise a placed order's total with the payment provider: after a redirect, wait for its callback, and fail the order and release the payment when it does not come in time; when the answer is lost, ask the provider.",
             "input": {
-              "description": "The input of a process that starts on an event (ADR 48): the event as it was recorded, its `data` decoded as `D`.",
+              "description": "The input of a process that starts on an event: the event as it was recorded, its `data` decoded as `D`.",
               "properties": {
                 "data": {
                   "description": "What the authorisation reads of the OrderPlaced it starts on.",
@@ -5254,7 +5287,7 @@
           {
             "doc": "Capture an order's payment with the payment provider as it is picked up; when the answer is lost, ask the provider.",
             "input": {
-              "description": "The input of a process that starts on an event (ADR 48): the event as it was recorded, its `data` decoded as `D`.",
+              "description": "The input of a process that starts on an event: the event as it was recorded, its `data` decoded as `D`.",
               "properties": {
                 "data": {
                   "description": "What the capture reads of the CaptureStarted it starts on.",
@@ -5301,7 +5334,7 @@
           {
             "doc": "Send an order to its store (task order.send_to_store, ordered by the store) as it starts sending, and record the store's answer: sent, send failed or send unknown.",
             "input": {
-              "description": "The input of a process that starts on an event (ADR 48): the event as it was recorded, its `data` decoded as `D`.",
+              "description": "The input of a process that starts on an event: the event as it was recorded, its `data` decoded as `D`.",
               "properties": {
                 "data": {
                   "description": "The store an order goes to, and what it is sent: SendStarted's data, and so the `sending` process's input.",
@@ -5514,7 +5547,8 @@
         "person_history": {
           "events": []
         },
-        "principal_attributes": []
+        "principal_attributes": [],
+        "apps": []
       },
       "queues": [
         {
@@ -5545,11 +5579,11 @@
         "order",
         "order-send"
       ],
-      "version": "0.3.2",
+      "version": "0.3.3",
       "wasm": {
-        "sha256": "26510914b09ccecc97d4766289bcc6cbf775d7f68a5996e44867d814f4be9dbf",
-        "size": 847404,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/order-v0.3.2/order.wasm"
+        "sha256": "7f98edf4619a6504c0fda584ca29db25dd2f6b2161323212187a8dfea209820a",
+        "size": 849290,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/order-v0.3.3/order.wasm"
       },
       "versions": [
         {
@@ -5567,6 +5601,10 @@
         {
           "version": "0.3.2",
           "abi": 6
+        },
+        {
+          "version": "0.3.3",
+          "abi": 6
         }
       ]
     },
@@ -5576,11 +5614,11 @@
       "runs": [
         "hosted"
       ],
-      "for": "The example hosted worker the order module's sending process sends orders to their stores through (ADR 33, 42, 43, 59): it posts each order to its store's address, with the store's key as a header the kernel adds, and answers what the store said: succeeded, failed or unknown.",
+      "for": "The example hosted worker the order module's sending process sends orders to their stores through: it posts each order to its store's address, with the store's key as a header the kernel adds, and answers what the store said: succeeded, failed or unknown.",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/order-send",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "works": [
@@ -5612,11 +5650,11 @@
       "setup_order": [
         "order-send"
       ],
-      "version": "0.2.1",
+      "version": "0.2.2",
       "wasm": {
-        "sha256": "5f381647d7745da3521297d40d201504f212ddef145f35a1d5a82ed1e1045366",
-        "size": 370652,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/order-send-v0.2.1/order-send.wasm"
+        "sha256": "1f738820078fdf7e85e1216355c77c7d35c5959717832ef626e8067ca28dabe9",
+        "size": 370656,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/order-send-v0.2.2/order-send.wasm"
       },
       "versions": [
         {
@@ -5629,6 +5667,10 @@
         },
         {
           "version": "0.2.1",
+          "abi": 6
+        },
+        {
+          "version": "0.2.2",
           "abi": 6
         }
       ]
@@ -5643,7 +5685,7 @@
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "apps/pick_one",
-        "commit": "baf8246f9363f4f0adbea37d9261fd2308cd35dd"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "version": "0.1.0",
       "guide": "FOR\n  An agent that needs a person to choose: it offers the options, each with\n  the reason for it, and gets back the one they picked and their note.\n\nASK\n  Install it once, for yourself (bk app install --from-catalog pick_one),\n  then ask in its route \"choose\":\n\n    bk app ask pick_one --route choose --to <person> --wait --args '{\n      \"question\": \"Which carrier ships the Osaka order?\",\n      \"options\": [\n        {\"option\": \"Yamato\", \"reason\": \"arrives tomorrow, 1200 yen\"},\n        {\"option\": \"Sagawa\", \"reason\": \"arrives in two days, 900 yen\"}\n      ]}'\n\n  args: question, what is asked (a string); options, at least one, each\n  an option (a string, unique among them) and the reason for it (a\n  string, may be \"\").\n\nANSWER\n  {\"option\": <the option picked, as it was given>, \"note\": <what the person\n  added, \"\" when nothing>}: the kernel holds the answer to that shape.\n\nTRIPS\n  The person asked opens the link bk prints; nobody else may answer.\n  Args not of this shape are shown to the person as what is wrong with\n  them, and they cannot answer: ask again with args of this shape.\n",
@@ -5695,11 +5737,11 @@
       "runs": [
         "hosted"
       ],
-      "for": "Example bizkernel module in Rust: a process asks Claude through a hosted worker (a task, ADR 31, 33), whose answer streams to whoever watches, then records the answer",
+      "for": "Example bizkernel module in Rust: a process asks Claude through a hosted worker (a task), whose answer streams to whoever watches, then records the answer",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/questions",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "help": {
@@ -5865,7 +5907,8 @@
         "person_history": {
           "events": []
         },
-        "principal_attributes": []
+        "principal_attributes": [],
+        "apps": []
       },
       "queues": [
         {
@@ -5896,11 +5939,11 @@
         "questions",
         "claude-ask"
       ],
-      "version": "0.3.2",
+      "version": "0.3.3",
       "wasm": {
-        "sha256": "9dfa446bc07c70595156c17223d57bf5afef702f53bd55a73028c6dc9ac8bafc",
-        "size": 477287,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/questions-v0.3.2/questions.wasm"
+        "sha256": "c2a73df042e4fce958aa5ec502e698967194bad53b678a25199d22e2b6a64fd8",
+        "size": 479201,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/questions-v0.3.3/questions.wasm"
       },
       "versions": [
         {
@@ -5918,6 +5961,10 @@
         {
           "version": "0.3.2",
           "abi": 6
+        },
+        {
+          "version": "0.3.3",
+          "abi": 6
         }
       ]
     },
@@ -5928,11 +5975,11 @@
         "hosted",
         "self_hosted"
       ],
-      "for": "The example worker the reports module's publishing process renders through (ADR 31, 32): one handler, run as a self-hosted worker (the binary) or installed into the kernel as a hosted one (the library, built to WebAssembly).",
+      "for": "The example worker the reports module's publishing process renders through: one handler, run as a self-hosted worker (the binary) or installed into the kernel as a hosted one (the library, built to WebAssembly).",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/report-render",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "works": [
@@ -5965,11 +6012,11 @@
       "setup_order": [
         "report-render"
       ],
-      "version": "0.2.1",
+      "version": "0.2.2",
       "wasm": {
-        "sha256": "113e1d6033ddb117a141ddd5df57a54ad10b117a075c239f4d317d8129cce034",
-        "size": 382490,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/report-render-v0.2.1/report-render.wasm"
+        "sha256": "237b3cd983c8cbfed781c43be19df4f1dabaa9ff0ce04382d816481fc057834d",
+        "size": 382485,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/report-render-v0.2.2/report-render.wasm"
       },
       "versions": [
         {
@@ -5983,6 +6030,10 @@
         {
           "version": "0.2.1",
           "abi": 6
+        },
+        {
+          "version": "0.2.2",
+          "abi": 6
         }
       ]
     },
@@ -5992,11 +6043,11 @@
       "runs": [
         "hosted"
       ],
-      "for": "Example bizkernel module in Rust: a process renders a report through a self-hosted worker (a task, ADR 31), then publishes it",
+      "for": "Example bizkernel module in Rust: a process renders a report through a self-hosted worker (a task), then publishes it",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "modules/reports",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "help": {
@@ -6285,7 +6336,8 @@
         "person_history": {
           "events": []
         },
-        "principal_attributes": []
+        "principal_attributes": [],
+        "apps": []
       },
       "queues": [
         {
@@ -6320,11 +6372,11 @@
         "reports",
         "report-render"
       ],
-      "version": "0.3.2",
+      "version": "0.3.3",
       "wasm": {
-        "sha256": "475b0b4437250d562cfa14fbd6ccc41d553f12e9d7a4f4ce75773461a03605b4",
-        "size": 523616,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/reports-v0.3.2/reports.wasm"
+        "sha256": "e16e06c5da3d1da4decdf9efdbcffec14231deb54ff1aa79634a9936891ec712",
+        "size": 525538,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/reports-v0.3.3/reports.wasm"
       },
       "versions": [
         {
@@ -6342,6 +6394,10 @@
         {
           "version": "0.3.2",
           "abi": 6
+        },
+        {
+          "version": "0.3.3",
+          "abi": 6
         }
       ]
     },
@@ -6352,11 +6408,11 @@
         "hosted",
         "self_hosted"
       ],
-      "for": "The worker the im module's transcoding process transcodes voice messages through (ADR 31, 33): it decodes a voice by its content type (WeChat's SILK) and encodes it to Ogg Opus, a file of the task's. One handler, run as a self-hosted worker (the binary) or installed into the kernel as a hosted one (the library, built to WebAssembly).",
+      "for": "The worker the im module's transcoding process transcodes voice messages through: it decodes a voice by its content type (WeChat's SILK) and encodes it to Ogg Opus, a file of the task's. One handler, run as a self-hosted worker (the binary) or installed into the kernel as a hosted one (the library, built to WebAssembly).",
       "source": {
         "repository": "https://github.com/sunfmin/bizkernel",
         "path": "cli/crates/voice-transcode",
-        "commit": "7a285be2d3da723c93452f66a0d7903eb5f60afc"
+        "commit": "77dec912be1acdad0014076bf09bd147344902cd"
       },
       "abi": 6,
       "works": [
@@ -6389,11 +6445,11 @@
       "setup_order": [
         "voice-transcode"
       ],
-      "version": "0.2.1",
+      "version": "0.2.2",
       "wasm": {
-        "sha256": "9035d7ed74012853652121fcc58e6103a8f89fc79d619ef846ed924cb803772b",
-        "size": 940717,
-        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/voice-transcode-v0.2.1/voice-transcode.wasm"
+        "sha256": "ea1a446dac8754af2974dfde08e174bac4eb9fc7dfed414e6a6415817fe9b984",
+        "size": 940719,
+        "url": "https://github.com/sunfmin/bizkernel-releases/releases/download/voice-transcode-v0.2.2/voice-transcode.wasm"
       },
       "versions": [
         {
@@ -6406,6 +6462,10 @@
         },
         {
           "version": "0.2.1",
+          "abi": 6
+        },
+        {
+          "version": "0.2.2",
           "abi": 6
         }
       ]
